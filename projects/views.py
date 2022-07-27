@@ -35,15 +35,8 @@ def create(request):
 
     form = ProjectForm(request.POST or None)
     if form.is_valid():
-        obj = form.save(commit=False)
-        obj.save()
-
-        """сохранение исполнителей в проект"""
-        performers = form.cleaned_data.get('performer')
-        for performer in performers:
-            obj.performer.add(performer)
-
-        return redirect('projects:project', form.cleaned_data.get('id'))
+        obj = form.save()
+        return redirect('projects:project', project_id=obj.id)
 
     context = {'form': form}
     return render(request, template, context)
