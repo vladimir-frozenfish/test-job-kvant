@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %} Тестовое задание для ФГУП "НИИ "Квант"{% endblock %}
+
+{% block content %}
+    <h2>Проект - {{ project.name }}:</h2>
+    <p>Приоритет - {{ project.priority }}</p>
+    <p>Статус - {{ project.status }}</p>
+    <p>Время создания - {{ project.creation_time }}</p>
+    <p>Исполнители -
+        {% for performer in performers %}
+            {{ performer.username }}{% if not forloop.last %},{% endif %}
+        {% endfor %}
+    </p>
+{% endblock %}
