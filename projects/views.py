@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Project
+from .models import Project, User
 from .forms import ProjectForm
 
 
@@ -33,14 +33,17 @@ def project(request, slug):
 def create(request):
     template = 'projects/create.html'
 
-    # print(request.POST)
-    # print(request.POST['slug'])
-
     form = ProjectForm(request.POST or None)
     if form.is_valid():
-        saving = form.save(commit=False)
-        saving.save()
-        return redirect('projects:project', request.POST['slug'])
+        obj = form.save(commit=False)
+        obj.save()
+
+        """сохранение исполнителей в проект"""
+        performers = form.cleaned_data.get('performer')
+        for performer in performers:
+            obj.performer.add(performer)
+
+        return redirect('projects:project', form.cleaned_data.get('slug'))
 
     context = {'form': form}
     return render(request, template, context)

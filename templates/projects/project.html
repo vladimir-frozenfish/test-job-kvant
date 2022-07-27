@@ -8,8 +8,12 @@
     <p>Статус - {{ project.status }}</p>
     <p>Время создания - {{ project.creation_time }}</p>
     <p>Исполнители -
-        {% for performer in performers %}
-            {{ performer.username }}{% if not forloop.last %},{% endif %}
-        {% endfor %}
+        {% if performers %}
+            {% for performer in performers %}
+                {{ performer.username }}{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        {% else %}
+            исполнители проекта не назначены
+        {% endif %}
     </p>
 {% endblock %}
