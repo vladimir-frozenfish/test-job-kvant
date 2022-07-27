@@ -17,6 +17,9 @@
         {% endif %}
     </p>
     <a href="{% url 'projects:edit' project.id %}">
-        Редактировать запись
+        Редактировать проект
+    </a><br>
+    <a href="{% url 'projects:destroy' project.id %}">
+        Удалить проект
     </a>
 {% endblock %}

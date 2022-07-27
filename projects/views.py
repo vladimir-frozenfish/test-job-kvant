@@ -56,4 +56,8 @@ def edit(request, project_id):
     return render(request, template, context)
 
 
+def destroy(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+    project.delete()
 
+    return redirect('projects:index')
