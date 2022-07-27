@@ -22,9 +22,9 @@ class Project(models.Model):
 
     name = models.CharField(max_length=100, unique=True, verbose_name='Имя проекта')
     priority = models.PositiveIntegerField(validators=[priority,], verbose_name='Приоритет')
-    status = models.CharField(max_length=20, choices=project_status, default='created')
+    status = models.CharField(max_length=20, choices=project_status, default='created', verbose_name='Статус')
     creation_time = models.DateTimeField(auto_now_add=True, verbose_name='Время создания')
-    performer = models.ManyToManyField(User, symmetrical=False, blank=True, null=True, related_name='projects', verbose_name = 'Исполнители проекта')
+    performer = models.ManyToManyField(User, symmetrical=False, blank=True, related_name='projects', verbose_name='Исполнители')
 
     def get_performer(self):
         return ', '.join(self.performer.all().values_list('username', flat=True))
