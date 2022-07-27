@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 
-from .models import Project, User
+from .models import Project
 from .forms import ProjectForm
 
 
@@ -31,6 +31,7 @@ def project(request, project_id):
 
 
 def create(request):
+    """создание нового проекта"""
     template = 'projects/create.html'
 
     form = ProjectForm(request.POST or None)
@@ -43,6 +44,7 @@ def create(request):
 
 
 def edit(request, project_id):
+    """редактирование проекта"""
     template = 'projects/create.html'
     project = get_object_or_404(Project, id=project_id)
 
@@ -57,6 +59,7 @@ def edit(request, project_id):
 
 
 def destroy(request, project_id):
+    """удаление проекта"""
     project = get_object_or_404(Project, id=project_id)
     project.delete()
 
