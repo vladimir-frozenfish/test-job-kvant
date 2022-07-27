@@ -15,9 +15,9 @@ def index(request):
     return render(request, template, context)
 
 
-def project(request, slug):
+def project(request, project_id):
     """выводит информацию о конкретном проекте"""
-    project = get_object_or_404(Project, slug=slug)
+    project = get_object_or_404(Project, id=project_id)
     performers = project.performer.all()
 
     template = 'projects/project.html'
@@ -43,7 +43,24 @@ def create(request):
         for performer in performers:
             obj.performer.add(performer)
 
-        return redirect('projects:project', form.cleaned_data.get('slug'))
+        return redirect('projects:project', form.cleaned_data.get('id'))
 
     context = {'form': form}
     return render(request, template, context)
+
+
+def edit(request, project_id):
+    template = 'projects/create.html'
+    project = get_object_or_404(Project, id=project_id)
+
+    form = ProjectForm(request.POST or None, instance=project)
+    if form.is_valid():
+        form.save()
+        return redirect('projects:project', project_id=project.id)
+
+    context = {'form': form,
+               'is_edit': True}
+    return render(request, template, context)
+
+
+

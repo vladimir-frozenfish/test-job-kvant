@@ -16,4 +16,7 @@
             исполнители проекта не назначены
         {% endif %}
     </p>
+    <a href="{% url 'projects:edit' project.id %}">
+        Редактировать запись
+    </a>
 {% endblock %}
