@@ -1,0 +1,20 @@
+{% extends "base_form.html" %}
+{% block title %}
+    {% if is_edit %}
+        Редактировать проект
+    {% else %}
+        Добавить проект
+    {% endif %}
+{% endblock %}
+
+{% block first_message %}
+Новый проект
+{% endblock %}
+
+{% block button %}
+    {% if is_edit %}
+        Сохранить проект
+    {% else %}
+        Добавить проект
+    {% endif %}
+{% endblock %}
