@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Max
 
-from .models import Project
+from .models import Project, ProjectStatus
 from .forms import ProjectForm
 
 
@@ -64,3 +65,10 @@ def destroy(request, project_id):
     project.delete()
 
     return redirect('projects:index')
+
+
+def choose(request):
+    """определяет и возвращает наиболее приоритетный проект
+     со статусами «создан» и «остановлен», созданный раньше остальных"""
+    priority_project = Project.objects.exclude(status=ProjectStatus.LAUNCHED).latest('priority')
+    return redirect('projects:project', priority_project.id)
